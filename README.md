@@ -46,3 +46,7 @@
 
 ### Админ-панель:
 - Использование Django Admin для управления задачами.
+
+Danila Ladygin
+budlighterluk@gmail.com
+@SkyWalker_OG
