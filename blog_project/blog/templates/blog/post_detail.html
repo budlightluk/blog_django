@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.body }}</p>
+    <a href="{% url 'post_update' post.pk %}">Edit Post</a>
+    <a href="{% url 'post_delete' post.pk %}">Delete Post</a>
+    <a href="{% url 'post_list' %}">Back to list</a>
+
+    <h2>Comments</h2>
+    <ul>
+        {% for comment in post.comments.all %}
+            <li><strong>{{ comment.author }}:</strong> {{ comment.content }}</li>
+        {% endfor %}
+    </ul>
+
+    {% if user.is_authenticated %}
+        <h2>Add a Comment</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}">Log in</a> to leave a comment.</p>
+    {% endif %}
+
+    <a href="{% url 'post_edit' pk=post.pk %}">Edit Post</a>
+    <form method="post" action="{% url 'post_delete' pk=post.pk %}">
+        {% csrf_token %}
+        <button type="submit">Delete Post</button>
+    </form>
+    <a href="{% url 'post_list' %}">Back to list</a>
+</body>
+</html>
